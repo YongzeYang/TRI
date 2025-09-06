@@ -19,13 +19,13 @@ This table highlights TRI’s unique features versus several well-known librarie
 
 | **Feature** | **TRI** | **Eigen** | **Armadillo** | **Intel MKL** |
 | :--- | :--- | :--- | :--- | :--- |
-| **Matrix Types & Storage** | • Dense, packed lower-triangular, and **block-based** triangular matrices | • Dense & sparse (standard storage formats) | • Dense & sparse (standard storage formats) | • Standard dense/sparse BLAS/LAPACK formats; not specialized |
-| **Memory Management & Caching** | • Advanced block manager with **configurable eviction** (LRU, AccessCount) | • In-memory only (no built-in block caching) | • In-memory only | • Highly optimized routines, but no dynamic cache management |
-| **Hybrid Storage Options** | • Supports **hybrid (memory + disk) storage** for out-of-core matrices | • No built-in support for disk backing | • No inherent disk‐based storage | • Computations run in memory; external I/O required |
-| **Matrix Factory Interfaces** | • Extensive factory functions (identity, zeros, random, diagonal, etc.) | • Provides basic constructors and helper functions | • Basic factory routines available | • Not applicable (low-level BLAS/LAPACK routines) |
-| **Caching for Large-Scale Problems** | • Optimized for huge matrices via **block-level caching** and eviction policies | • Optimized for small/medium problems; less focus on memory pressure | • Performance relies on underlying BLAS/LAPACK; not block‐oriented | • Best-case performance on supported hardware (all operations in-memory) |
-| **Extensibility & Customization** | • Highly modular design with **pluggable eviction policies** and storage backends | • Extensible expression framework, but limited in memory mgmt. | • Extensible in terms of algorithms; memory mgmt is fixed | • Proprietary and highly tuned; customization is limited |
-| **Thread Safety & Concurrency** | • Optional thread-safe operations in `BlockManager` with mutex support | • Supports parallelism if used carefully | • Generally thread-safe if underlying BLAS is multi-threaded | • Optimized for multi-threading, but not directly extensible |
+| **Matrix Types & Storage** | ✅ Dense, packed lower-triangular, and **block-based** triangular matrices | ⚠️ Dense & sparse (standard storage formats) | ⚠️ Dense & sparse (standard storage formats) | ⚠️ Standard dense/sparse BLAS/LAPACK formats; not specialized |
+| **Memory Management & Caching** | ✅ Advanced block manager with **configurable eviction** (LRU, AccessCount) | ❌ In-memory only (no built-in block caching) | ❌ In-memory only | ❌ Highly optimized routines, but no dynamic cache management |
+| **Hybrid Storage Options** | ✅ Supports **hybrid (memory + disk) storage** for out-of-core matrices | ❌ No built-in support for disk backing | ❌ No inherent disk‐based storage | ❌ Computations run in memory; external I/O required |
+| **Matrix Factory Interfaces** | ✅ Extensive factory functions (identity, zeros, random, diagonal, etc.) | ⚠️ Provides basic constructors and helper functions | ⚠️ Basic factory routines available | ❌ Not applicable (low-level BLAS/LAPACK routines) |
+| **Caching for Large-Scale Problems**| ✅ Optimized for huge matrices via **block-level caching** and eviction policies | ❌ Optimized for small/medium problems; less focus on memory pressure | ❌ Performance relies on underlying BLAS/LAPACK; not block‐oriented | ❌ Best-case performance on supported hardware (all operations in-memory) |
+| **Extensibility & Customization** | ✅ Highly modular design with **pluggable eviction policies** and storage backends | ⚠️ Extensible expression framework, but limited in memory mgmt. | ⚠️ Extensible in terms of algorithms; memory mgmt is fixed | ❌ Proprietary and highly tuned; customization is limited |
+| **Thread Safety & Concurrency** | ✅ Optional thread-safe operations in `BlockManager` with mutex support | ⚠️ Supports parallelism if used carefully | ⚠️ Generally thread-safe if underlying BLAS is multi-threaded | ✅ Optimized for multi-threading, but not directly extensible |
 
 ---
 
