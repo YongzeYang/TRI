@@ -15,17 +15,24 @@ TRI was created to address this fundamental challenge. It provides a robust, out
 
 ## Key Features
 
-*   **Out-of-Core Engine for Massive Datasets**  
-    At its core, TRI features the `BlockedTriMatrix`, a sophisticated container that represents a massive virtual matrix on disk. This matrix is partitioned into smaller, cache-friendly blocks that are lazily loaded into memory only when accessed. This architecture fundamentally breaks the memory barrier, enabling the manipulation of matrices that are orders of magnitude larger than the available RAM.
+This table highlights TRI’s unique features versus several well-known libraries.
 
-*   **Intelligent & Customizable Caching**  
-    The library's `BlockManager` acts as a central nervous system for memory management. It uses pluggable eviction policies to decide which data blocks to keep in memory. Beyond standard policies like LRU, TRI includes an advanced `AccessCountPolicy` that can be configured to be "algorithm-aware." By providing it with a predictive model of your algorithm's access patterns (e.g., from a Cholesky decomposition), you can achieve near-optimal cache hit rates, minimizing I/O latency.
+| **Feature** | **TRI** | **Eigen** | **Armadillo** | **Intel MKL** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Matrix Types & Storage** | • Dense, packed lower-triangular, and **block-based** triangular matrices | • Dense & sparse (standard storage formats) | • Dense & sparse (standard storage formats) | • Standard dense/sparse BLAS/LAPACK formats; not specialized |
+| **Memory Management & Caching** | • Advanced block manager with **configurable eviction** (LRU, AccessCount) | • In-memory only (no built-in block caching) | • In-memory only | • Highly optimized routines, but no dynamic cache management |
+| **Hybrid Storage Options** | • Supports **hybrid (memory + disk) storage** for out-of-core matrices | • No built-in support for disk backing | • No inherent disk‐based storage | • Computations run in memory; external I/O required |
+| **Matrix Factory Interfaces** | • Extensive factory functions (identity, zeros, random, diagonal, etc.) | • Provides basic constructors and helper functions | • Basic factory routines available | • Not applicable (low-level BLAS/LAPACK routines) |
+| **Caching for Large-Scale Problems** | • Optimized for huge matrices via **block-level caching** and eviction policies | • Optimized for small/medium problems; less focus on memory pressure | • Performance relies on underlying BLAS/LAPACK; not block‐oriented | • Best-case performance on supported hardware (all operations in-memory) |
+| **Extensibility & Customization** | • Highly modular design with **pluggable eviction policies** and storage backends | • Extensible expression framework, but limited in memory mgmt. | • Extensible in terms of algorithms; memory mgmt is fixed | • Proprietary and highly tuned; customization is limited |
+| **Thread Safety & Concurrency** | • Optional thread-safe operations in `BlockManager` with mutex support | • Supports parallelism if used carefully | • Generally thread-safe if underlying BLAS is multi-threaded | • Optimized for multi-threading, but not directly extensible |
 
-*   **Transparent Developer Experience**  
-    Despite the complexity of the underlying out-of-core mechanisms, the user-facing API remains remarkably simple. You interact with a `BlockedTriMatrix` as you would with any standard in-memory matrix, using familiar `mat(i, j)` semantics. The library transparently handles all the background tasks of block loading, eviction, and disk I/O, allowing you to focus on your algorithms, not on manual data management.
+---
 
-*   **Foundation for High-Performance Computing**  
-    Performance is paramount. TRI is built on a foundation of high-performance computing principles, integrating with optimized BLAS and LAPACK implementations (like OpenBLAS) to ensure that in-memory computations (`gemm`, `trsm`, `svd`, `cholesky`, etc.) are executed with maximum efficiency.
+**Key Advantages of TRI:**
+*   **Advanced Block-Level Memory Management:** TRI provides configurable eviction policies and hybrid storage, making it well-suited for extremely large matrices and memory-constrained environments.
+*   **Specialized Matrix Storage Formats:** The block-based implementation for triangular matrices improves cache locality and computational efficiency for relevant algorithms.
+*   **Modular & Extensible Design:** With pluggable factories, eviction policies, and storage backends, TRI is designed for future extension and customization beyond traditional dense libraries.
 
 ## Repository Structure
 
